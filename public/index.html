@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume ATS Alignment Studio</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">RA</span>
+      <div>
+        <h1>Resume ATS Alignment Studio</h1>
+        <p class="tagline">Tailor your resume &amp; cover letter to any job description — in your own voice, in your own format.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT COLUMN: inputs -->
+    <section class="panel-col">
+
+      <details class="card" id="keysCard" open>
+        <summary><h2>1. LLM API Key</h2><span class="hint">Required</span></summary>
+        <div class="card-body">
+          <p class="muted">Your key is sent straight from this app to your provider's API for each request. It is never written to disk and is cleared when you close this tab (kept only in this browser's session storage in the meantime).</p>
+          <label>Anthropic (Claude) API key
+            <input type="password" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off" />
+          </label>
+          <label>OpenAI (GPT) API key
+            <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off" />
+          </label>
+          <div class="row">
+            <label class="grow">Model
+              <select id="modelChoice">
+                <option value="auto" selected>Auto — let the app pick the best available model</option>
+              </select>
+            </label>
+          </div>
+          <p class="muted small">Auto mode uses your strongest available provider for the actual writing, and a lighter/faster model for quick JD analysis and small length adjustments — to keep things fast and inexpensive.</p>
+        </div>
+      </details>
+
+      <details class="card" id="resumeCard" open>
+        <summary><h2>2. Your Resume</h2><span class="hint">Required</span></summary>
+        <div class="card-body">
+          <div class="row">
+            <button class="btn secondary" id="loadSampleBtn" type="button">Use Harender's sample resume</button>
+            <label class="file-btn">
+              Upload a resume (PDF / DOCX / TXT)
+              <input type="file" id="resumeFile" accept=".pdf,.docx,.txt,.md" hidden />
+            </label>
+          </div>
+          <div id="resumeStatus" class="status"></div>
+          <details class="nested">
+            <summary>Edit parsed resume (JSON)</summary>
+            <textarea id="resumeJsonBox" rows="12" spellcheck="false" placeholder="Load or upload a resume first..."></textarea>
+            <button class="btn small" id="applyResumeJsonBtn" type="button">Apply edits</button>
+          </details>
+        </div>
+      </details>
+
+      <details class="card" id="contextCard">
+        <summary><h2>3. Additional Context</h2><span class="hint">Optional</span></summary>
+        <div class="card-body">
+          <p class="muted">LinkedIn export, older resumes, project write-ups, performance reviews — anything that gives more true detail to draw on.</p>
+          <label class="file-btn">
+            Add document(s)
+            <input type="file" id="contextFiles" accept=".pdf,.docx,.txt,.md" multiple hidden />
+          </label>
+          <div id="contextFileList" class="chip-list"></div>
+          <label>Or paste extra context directly
+            <textarea id="contextText" rows="4" placeholder="Paste any extra background here..."></textarea>
+          </label>
+        </div>
+      </details>
+
+      <details class="card" id="jdCard" open>
+        <summary><h2>4. Job Description</h2><span class="hint">Required</span></summary>
+        <div class="card-body">
+          <label class="file-btn">
+            Upload JD file (PDF / DOCX / TXT)
+            <input type="file" id="jdFile" accept=".pdf,.docx,.txt,.md" hidden />
+          </label>
+          <label>Or paste the job description
+            <textarea id="jdText" rows="8" placeholder="Paste the full job description here..."></textarea>
+          </label>
+          <button class="btn secondary" id="analyzeJdBtn" type="button">Analyze job description</button>
+          <div id="jdAnalysisResult" class="analysis-box"></div>
+        </div>
+      </details>
+
+      <details class="card" id="instructionsCard">
+        <summary><h2>5. Custom Instructions</h2><span class="hint">Optional</span></summary>
+        <div class="card-body">
+          <textarea id="customInstructions" rows="4" placeholder="e.g. Emphasize the pricing/AI work over manufacturing, keep tone understated, target a CFO audience..."></textarea>
+        </div>
+      </details>
+
+      <button class="btn primary full" id="generateBtn" type="button">Generate tailored resume &amp; cover letter</button>
+      <div id="globalError" class="error-box" hidden></div>
+    </section>
+
+    <!-- RIGHT COLUMN: output -->
+    <section class="panel-col" id="resultsCol">
+      <div id="progressBox" class="card progress-box" hidden>
+        <div class="spinner"></div>
+        <p id="progressText">Working...</p>
+      </div>
+
+      <div id="resultsEmpty" class="card empty-state">
+        <p>Your tailored resume and cover letter will appear here, with a transparent before/after ATS keyword match and a verified page count.</p>
+      </div>
+
+      <div id="resultsContent" hidden>
+        <div class="card">
+          <h2>ATS Alignment</h2>
+          <div class="score-row">
+            <div class="score-box">
+              <span class="score-label">Before</span>
+              <span class="score-value" id="scoreBefore">–</span>
+            </div>
+            <div class="score-arrow">→</div>
+            <div class="score-box highlight">
+              <span class="score-label">After</span>
+              <span class="score-value" id="scoreAfter">–</span>
+            </div>
+          </div>
+          <div class="keyword-section">
+            <h3>Matched keywords</h3>
+            <div id="matchedKeywords" class="chip-list"></div>
+          </div>
+          <div class="keyword-section">
+            <h3>Still not present (only add if genuinely true)</h3>
+            <div id="missingKeywords" class="chip-list muted-chips"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>What changed</h2>
+          <ul id="changeNotes"></ul>
+        </div>
+
+        <div class="card">
+          <h2>Downloads</h2>
+          <div class="fit-status" id="resumeFitStatus"></div>
+          <a class="btn primary" id="downloadResumeBtn" href="#" download>Download Resume (.docx)</a>
+          <div class="fit-status" id="letterFitStatus"></div>
+          <a class="btn primary" id="downloadLetterBtn" href="#" download>Download Cover Letter (.docx)</a>
+          <p class="muted small" id="modelUsedNote"></p>
+        </div>
+
+        <div class="card">
+          <h2>Resume preview</h2>
+          <div id="resumePreview" class="doc-preview"></div>
+        </div>
+
+        <div class="card">
+          <h2>Cover letter preview</h2>
+          <div id="letterPreview" class="doc-preview letter"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "name": "HARENDER KUMAR KHATRI",
+  "tagline": "Corporate Strategy • M&A & Corporate Development • Manufacturing & Operations Excellence",
+  "location": "Gurugram, Haryana, India",
+  "phones": ["+91-9929746660", "+60 19 273 3158"],
+  "email": "7harenderk@iima.ac.in",
+  "linkedin": "linkedin.com/in/harenderkumar",
+  "summary": "Corporate strategy and transformation executive with 18+ years across telecom, digital platforms, automotive manufacturing, and management consulting. Track record of shaping board-level strategy, leading end-to-end M&A, and driving multi-million-dollar impact through pricing, operations, and AI-enabled decision-making at Celcom Axiata, SEEK Asia, Maxis, and Arthur D. Little. Currently leads manufacturing excellence and operations strategy for ASK Automotive, and is a Certified Independent Director building board governance expertise.",
+  "competencies": [
+    "Corporate Strategy & Planning",
+    "M&A, Valuation & Due Diligence",
+    "Manufacturing Excellence & Automation",
+    "Pricing & Revenue Strategy",
+    "AI/ML & Data Analytics",
+    "Business Transformation",
+    "Board Governance",
+    "P&L & Commercial Operations",
+    "Investor & Stakeholder Relations"
+  ],
+  "experience": [
+    {
+      "title": "Chief General Manager (SVP) – Strategy, Automation & Manufacturing Excellence",
+      "company": "ASK Automotive Limited",
+      "location": "Gurugram, India",
+      "dates": "Jan 2026 – Present",
+      "bullets": [
+        "Lead group-wide manufacturing excellence and operations strategy across plants, driving automation, standardization, and process re-engineering to lift cost, quality, and delivery performance.",
+        "Own the productivity improvement roadmap that is making plants more efficient, reliable, and cost-competitive at scale."
+      ]
+    },
+    {
+      "title": "Head of Pricing (Regional Head, Strategic Pricing & Commercial Operations)",
+      "company": "SEEK Asia",
+      "location": "Kuala Lumpur, Malaysia",
+      "dates": "Mar 2023 – Nov 2025",
+      "bullets": [
+        "Led commercial and pricing strategy across 6 Southeast Asian markets, overseeing a ~AUD 250M revenue portfolio.",
+        "Designed and launched an AI-driven variable pricing platform across 400+ job clusters, delivering AUD/RM 20M incremental revenue and an 8% YoY yield uplift.",
+        "Built pricing governance frameworks, risk flags, and real-time Tableau dashboards, giving leadership clear visibility into yield and adoption across markets.",
+        "Led a team of 9 analysts and managers; partnered with regional leadership to align pricing, GTM, and sales strategy with commercial objectives."
+      ]
+    },
+    {
+      "title": "Head of Strategy & Corporate Development",
+      "company": "Celcom Axiata Berhad",
+      "location": "Kuala Lumpur, Malaysia",
+      "dates": "Mar 2018 – Mar 2023",
+      "bullets": [
+        "Led Celcom's Strategy & Corporate Development function reporting to the CEO and Board; directed long-term growth planning, portfolio reviews, and enterprise-wide transformation.",
+        "Executed 2 end-to-end M&A transactions (Bridgenet – cybersecurity; Infront Consulting – cloud), from due diligence through post-merger integration, unlocking RM14M in recurring B2B revenue.",
+        "Shaped Malaysia's 5G rollout, fiber, and enterprise B2B strategy; structured co-investment and partnership models that unlocked RM100M in savings and new revenue.",
+        "Launched Celcom's Data-as-a-Service platform and digital wallet ecosystem, onboarding 1M+ users and 50,000 merchants."
+      ]
+    },
+    {
+      "title": "Senior Strategy Specialist",
+      "company": "Maxis Berhad",
+      "location": "Kuala Lumpur, Malaysia",
+      "dates": "Mar 2015 – Feb 2018",
+      "bullets": [
+        "Delivered RM26M in annualized cost savings by renegotiating international roaming and wholesale voice contracts and introducing carrier aggregation.",
+        "Led financial valuation, synergy assessment, and due diligence for strategic M&A targets, including Touch 'n Go, U Mobile, and Astro.",
+        "Launched Maxis's SME e-commerce platform, driving up to 18% revenue uplift for participating SME clients."
+      ]
+    },
+    {
+      "title": "Management Consultant",
+      "company": "Delivery Associates",
+      "location": "Brunei",
+      "dates": "Jun 2014 – Feb 2015",
+      "bullets": [
+        "Advised Brunei's government on national competitiveness; reforms helped raise the World Bank Ease of Doing Business ranking from #101 to #84 and lifted SME share of GDP from 22% to 25% in two years."
+      ]
+    },
+    {
+      "title": "Management Consultant",
+      "company": "Arthur D. Little",
+      "location": "Southeast Asia & India",
+      "dates": "Jan 2010 – Jun 2014",
+      "bullets": [
+        "Delivered 25+ strategy and transformation projects across banking, oil & gas, logistics, ports, and consumer sectors in Southeast Asia and India.",
+        "Led valuation and synergy modeling for DRB-Hicom's 32.3% acquisition of POS Malaysia; designed Johor Port's 25-year CAPEX roadmap.",
+        "Developed the Pengerang Petroleum Complex masterplan, attracting multi-billion-dollar FDI including Petronas RAPID, and restructured Petronas's R&D strategy.",
+        "Designed Yes Bank's SME digital lending platform, cutting loan turnaround from 7–10 days to under 48 hours.",
+        "Facilitated Malaysia's Palm Oil NKEA Lab, designing initiatives projected to add RM47B to national GNI."
+      ]
+    }
+  ],
+  "earlierCareer": [
+    "Senior Associate, Copal Partners (2008 – 2009) — Led BASEL II compliance advisory for Southeast Asian banks, delivering risk and capital adequacy evaluations.",
+    "Associate, Lehman Brothers, Tokyo (2006 – 2007) — Managed financial operations and equity trading analytics; recognized in the Top 1% for performance.",
+    "Analyst, Deloitte Consulting (2004 – 2006) — Supported enterprise technology integration projects, optimizing ICT strategy and cross-functional efficiency."
+  ],
+  "boardGovernance": ["Certified Independent Director, Indian Institute of Corporate Affairs (IICA) — Aug 2026 – Present"],
+  "education": [
+    "Master of Business Administration (MBA/PGDM) – Indian Institute of Management, Ahmedabad | 2007 – 2009",
+    "Master of Technology, Mechanical Engineering (CAD & Automation) – Indian Institute of Technology, Bombay | 2003 – 2004",
+    "Bachelor of Technology, Mechanical Engineering – Indian Institute of Technology, Bombay | 1999 – 2003"
+  ],
+  "certifications": [
+    "Certified Artificial Intelligence Consultant (CAIC™), USAII — Membership ID 8053330741",
+    "Certified Independent Director, Indian Institute of Corporate Affairs",
+    "Prosci® Certified Change Practitioner (K-Pintar Systems)",
+    "Lean Six Sigma Black Belt, AIGPE",
+    "Systems Thinking; Design Thinking for Project Managers; Software Design – Developing Effective Requirements"
+  ]
+}
