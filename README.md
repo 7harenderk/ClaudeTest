@@ -5,6 +5,33 @@ for a specific job description — in your own resume's look, in your own voice,
 transparent before/after ATS keyword score, and a **verified** page count (exactly
 2 pages for the resume, exactly 1 for the cover letter) rather than a guess.
 
+## How to run it (no coding needed)
+
+This app runs on your own computer as a small local web server — there's no installer,
+but two double-clickable files get you there. **This is a one-time setup.**
+
+1. **Get the code onto your computer.** On the GitHub page for this branch, click the
+   green **Code** button → **Download ZIP**, then unzip it wherever you like (e.g. your
+   Desktop). (If you're comfortable with git, `git clone` + check out this branch works too.)
+2. **Install Node.js** if you don't already have it: go to https://nodejs.org, download
+   the **LTS** version, and run the installer (Next, Next, Finish — defaults are fine).
+3. **Install LibreOffice** (free) so the app can verify the exact 2-page/1-page fit:
+   https://www.libreoffice.org/download — again, defaults are fine. You can skip this,
+   but then page counts are an estimate instead of a verified render.
+4. **Start the app:**
+   - **Mac:** double-click `start.command` in the unzipped folder. If macOS blocks it the
+     first time, right-click it → **Open** → **Open** to confirm.
+   - **Windows:** double-click `start.bat` in the unzipped folder.
+   - A terminal window will open, install what it needs the first time, and then open
+     `http://localhost:3000` in your browser automatically.
+5. **Use the app** in that browser tab — paste in your API key, your resume, and a job
+   description (see "Using it" below).
+6. **When you're done**, close the terminal window (or press Ctrl+C in it) to stop the app.
+   Run the same double-click file again any time you want to use it again.
+
+If double-clicking doesn't work on your machine, open a terminal/command prompt in the
+folder and run `npm install` once, then `npm start` each time — see **Setup** below.
+
 ## What it does
 
 1. You paste in a job description (or upload one).
@@ -73,6 +100,7 @@ Then open http://localhost:3000.
 ## Project layout
 
 ```
+start.command / start.bat     Double-click launchers (Mac / Windows)
 server.js                     Express entry point
 src/config/models.js          Provider/model registry + auto-selection logic
 src/services/llmClient.js     Minimal fetch-based Anthropic/OpenAI client
