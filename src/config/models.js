@@ -45,7 +45,10 @@ function listAvailableProviders(apiKeys = {}) {
  * @param {object} override - { provider?: string, model?: string } explicit user choice
  */
 function selectModel(apiKeys = {}, tier = 'flagship', override = {}) {
-  if (override && override.provider && override.model) {
+  // Default parameters only apply for `undefined` -- the frontend sends an
+  // explicit `null` for "Auto", so normalize that here too.
+  override = override || {};
+  if (override.provider && override.model) {
     return { provider: override.provider, model: override.model, auto: false };
   }
 
