@@ -10,7 +10,7 @@ echo.
 where node >nul 2>nul
 if errorlevel 1 (
   echo [ERROR] Node.js was not found on this computer.
-  echo Install it from https://nodejs.org ^(choose the LTS version^), then run this file again.
+  echo Install it from https://nodejs.org - choose the LTS version - then run this file again.
   echo.
   pause
   exit /b 1
@@ -38,7 +38,7 @@ echo Once you see "running at http://localhost:3000" below, open that address in
 echo Leave THIS window open while you use the app. Close it to stop the server.
 echo.
 
-start "" cmd /c "timeout /t 2 >nul && start http://localhost:3000"
+start "" open-browser.bat
 call npm start
 
 echo.
