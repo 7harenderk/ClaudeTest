@@ -2,8 +2,15 @@
 // one to pick automatically for a given kind of task. Providers and model line-ups
 // change faster than this app does -- if a call starts failing with a
 // "model not found" style error, this is the file to update. Everything here can
-// also be overridden per-request from the UI (the model dropdown), so a stale
-// default never locks anyone out.
+// also be overridden per-request from the UI ("Override with an exact model ID"
+// under the Model dropdown), so a stale default never locks anyone out -- that
+// override is the reliable fix; treat the defaults below as best-effort.
+//
+// The OpenAI model IDs here are NOT independently verified against a live
+// OpenAI account (this app has no standing connection to OpenAI to check
+// against) -- if one 404s as "does not exist", use the UI override with a
+// model ID from your own OpenAI dashboard/docs rather than assuming the app
+// is broken.
 
 const PROVIDERS = {
   anthropic: {
@@ -22,9 +29,9 @@ const PROVIDERS = {
     label: 'OpenAI (GPT)',
     apiBase: 'https://api.openai.com/v1/chat/completions',
     models: {
-      flagship: 'gpt-5.1',
-      balanced: 'gpt-5.1',
-      fast: 'gpt-5.1-mini'
+      flagship: 'gpt-4.1',
+      balanced: 'gpt-4.1',
+      fast: 'gpt-4.1-mini'
     }
   }
 };

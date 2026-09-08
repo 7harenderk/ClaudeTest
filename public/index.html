@@ -39,6 +39,25 @@
             </label>
           </div>
           <p class="muted small">Auto mode uses your strongest available provider for the actual writing, and a lighter/faster model for quick JD analysis and small length adjustments — to keep things fast and inexpensive.</p>
+
+          <details class="nested">
+            <summary>Model not working? Override with an exact model ID</summary>
+            <div class="card-body" style="margin-top:8px;">
+              <p class="muted small">Provider model names change and vary by account. If you get a "model does not exist" error, pick the provider below and type the exact model ID your account has access to (check your provider's console/docs for the current name) — this overrides both the dropdown above and the app's built-in defaults.</p>
+              <div class="row">
+                <label>Provider
+                  <select id="customProvider">
+                    <option value="">— none (use dropdown above) —</option>
+                    <option value="anthropic">Anthropic</option>
+                    <option value="openai">OpenAI</option>
+                  </select>
+                </label>
+                <label class="grow">Exact model ID
+                  <input type="text" id="customModelId" placeholder="e.g. gpt-4o, gpt-4.1, claude-opus-5..." autocomplete="off" />
+                </label>
+              </div>
+            </div>
+          </details>
         </div>
       </details>
 

@@ -33,6 +33,14 @@
   }
 
   function getModelOverride() {
+    // A typed custom model ID always wins -- it's the escape hatch for when a
+    // provider renames/retires a model faster than this app's defaults keep up.
+    const customProvider = $('customProvider').value;
+    const customModelId = $('customModelId').value.trim();
+    if (customProvider && customModelId) {
+      return { provider: customProvider, model: customModelId };
+    }
+
     const val = $('modelChoice').value;
     if (val === 'auto') return null;
     const [provider, model] = val.split('::');
