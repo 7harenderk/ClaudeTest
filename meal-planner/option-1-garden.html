@@ -7,83 +7,129 @@
 <link rel="stylesheet" href="mealflow.css">
 <style>
   :root{
-    --bg:#f5f9f7;--surface:#fff;--surface2:#f3f8f5;--head:#f0f6f3;--ink:#16261f;--muted:#5f7369;--faint:#a5b6ae;--line:#dce8e2;
+    --bg:#f4f8f6;--surface:#fff;--surface2:#f3f8f5;--head:#eef5f1;--ink:#16261f;--muted:#5f7369;--faint:#a5b6ae;--line:#dce8e2;
     --brand:#196e52;--brand-ink:#fff;--brand-soft:#e0f3ea;--accent:#e4783f;--accent-ink:#fff;
     --cB:#e8a317;--cL:#196e52;--cD:#3b82c4;
     --sB:#fff0cf;--sBi:#87580a;--sL:#dff3e9;--sLi:#126044;--sD:#e3f0fc;--sDi:#246598;
     --sec:#e9f6ef;--sec-ink:#186a4e;--focus-col:#f1faf5;--today-col:#fff7ea;--hover:rgba(25,110,82,.05);
     --egg:#b7791f;--chk:#c2410c;--win:#2b6cb0;--danger:#c53030;--danger-soft:#fde8e6;--ok:#16794f;
-    --radius:14px;--shadow:0 10px 28px rgba(24,38,31,.07);--lift:0 8px 20px rgba(25,110,82,.28);
+    --radius:14px;--shadow:0 1px 2px rgba(24,38,31,.04),0 10px 28px rgba(24,38,31,.06);--lift:0 8px 20px rgba(25,110,82,.28);
     --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--font-head:var(--font);
   }
+  html{scroll-behavior:smooth;scroll-padding-top:16px}
   .app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
-  .side{background:#123d31;color:#e8f6ef;padding:26px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
-  .brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:20px;padding:0 10px 22px}
+
+  /* ---- sidebar ---- */
+  .side{background:linear-gradient(180deg,#134333,#0f3529);color:#e8f6ef;padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px}
+  .brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:20px;padding:0 10px 20px;color:#fff;text-decoration:none}
   .logo{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#94dfbf;color:#123d31;font-size:19px}
-  .navlabel{color:#93b8aa;text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin:16px 10px 8px}
-  .nav a{display:block;color:#d7eee4;text-decoration:none;padding:11px 12px;margin:3px 0;border-radius:10px;font-weight:650;font-size:14px}
-  .nav a.active,.nav a:hover{background:#275d4b;color:#fff}
-  .side .field{background:#1d5140;border-color:#2c6b56;color:#fff;width:100%}
-  .side .field option{color:#111}
-  .side label{display:block;font-size:11px;color:#93b8aa;margin:14px 10px 5px;text-transform:uppercase;letter-spacing:.08em}
-  .side .field{width:calc(100% - 0px)}
-  .tip{margin-top:auto;padding:14px;background:#245844;border-radius:14px;font-size:12px;line-height:1.5;color:#d8eee3}
-  .tip b{display:block;color:#fff;font-size:13px;margin-bottom:3px}
-  main{padding:26px 30px 50px;min-width:0}
-  .top{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+  .navlabel{color:#8fb5a6;text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin:16px 10px 8px}
+  .nav{display:grid;gap:3px}
+  .nav a{display:flex;align-items:center;gap:11px;color:#d0e9de;text-decoration:none;padding:10px 12px;border-radius:10px;font-weight:600;font-size:14px;transition:background .15s}
+  .nav a i{font-style:normal;width:18px;text-align:center;opacity:.85}
+  .nav a.active{background:#2a6350;color:#fff;box-shadow:inset 3px 0 #94dfbf}
+  .nav a:hover{background:#245846;color:#fff}
+  .side .btn{background:transparent;border-color:#2f6a56;color:#d0e9de;width:100%;text-align:left}
+  .side .btn:hover{background:#245846}
+  .keys{margin-top:auto;padding:14px;background:#1c5240;border-radius:14px;font-size:12px;line-height:1.55;color:#cde6da}
+  .keys b{display:block;color:#fff;font-size:13px;margin-bottom:4px}
+  kbd{font:600 11px/1 var(--font);background:#0f3529;border:1px solid #2f6a56;border-radius:5px;padding:2px 6px;color:#fff}
+
+  /* ---- main ---- */
+  main{padding:26px 32px 56px;min-width:0}
+  .top{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap}
   .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand);font-weight:800}
-  .top h1{font-size:28px;letter-spacing:-.03em;margin:4px 0 5px}
+  .top h1{font-size:30px;letter-spacing:-.03em;margin:4px 0 5px}
   .top p{margin:0;color:var(--muted)}
   .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.95fr);gap:18px;margin:24px 0 18px;align-items:start}
-  .stack{display:grid;gap:18px}
+  .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);grid-template-areas:"strip plan" "agenda plan";gap:18px;margin:24px 0 18px;align-items:start}
+  #strip-card{grid-area:strip}#agenda-card{grid-area:agenda}#plan{grid-area:plan;position:sticky;top:16px;border-top:4px solid var(--brand)}
   .pad{padding:20px}
-  .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+  .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px 14px;margin-bottom:16px;flex-wrap:wrap}
   .card-head h2{font-size:16px}
   .card-head small{color:var(--muted);display:block;margin-top:2px}
   .navbtns{display:flex;gap:6px;align-items:center}
-  .navbtns .field{padding:7px 8px}
-  .month{color:var(--brand);font-weight:800;font-size:12px;margin-right:6px}
-  .stats{margin-bottom:18px}
+  .navbtns .field{padding:7px 8px;width:138px}
+  .month{color:var(--brand);font-weight:800;font-size:12px;margin-right:6px;white-space:nowrap}
+  #plan .plan-head h2{font-size:19px}
+  #plan .plan-row{padding:14px 0}
+  #plan .plan-item b{font-size:15px}
+  .stats{margin-bottom:22px}
   .tools{margin:0 0 12px}
   .tablecard{overflow:hidden}
   .tablehead{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 12px;gap:10px;flex-wrap:wrap}
   .tablehead h2{font-size:16px}
   .tablehead small{color:var(--muted)}
-  @media(max-width:1100px){.hero{grid-template-columns:1fr}}
-  @media(max-width:860px){.app{grid-template-columns:1fr}.side{display:none}main{padding:18px 14px 40px}.top h1{font-size:23px}}
+  .diet{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .diet .field{padding:6px 8px;font-size:12px}
+  .board tr.meal-row:nth-child(even) .meal-cell{background:#fbfdfc}
+  .cell-td,.meal-cell{transition:background-color .12s}
+  .chip{box-shadow:0 1px 0 rgba(0,0,0,.05)}
+  .date-card{cursor:pointer}
+  .date-card:hover:not(.is-focus){transform:translateY(-2px);box-shadow:0 6px 14px rgba(24,38,31,.08)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  /* ---- tablet: single column, plan first ---- */
+  @media(max-width:1100px){
+    .hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"strip" "plan" "agenda"}
+    #plan{position:static}
+  }
+  /* ---- phone: sidebar becomes a sticky top bar ---- */
+  @media(max-width:860px){
+    .app{grid-template-columns:minmax(0,1fr)}
+    .side{position:sticky;top:0;z-index:20;height:auto;flex-direction:row;align-items:center;gap:6px;padding:8px 12px;overflow-x:auto;scrollbar-width:none}
+    .side::-webkit-scrollbar{display:none}
+    .brand{padding:0 6px 0 0;font-size:17px;flex:none}.logo{width:28px;height:28px;font-size:15px}
+    .navlabel,.keys,.side .btn{display:none}
+    .nav{display:flex;gap:4px}
+    .nav a{padding:8px 11px;white-space:nowrap;font-size:13px}.nav a i{display:none}.nav a.active{box-shadow:none}
+    main{padding:16px 14px 44px}
+    .top h1{font-size:24px}.top{align-items:flex-start}
+    .pad{padding:16px}
+    .navbtns .field{width:auto;flex:1}.navbtns{width:100%}.month{display:none}
+    .tools .search{max-width:none}
+    .tablehead{padding:14px}
+    .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .stat{padding:10px 11px}.stat .val{font-size:20px}.stat .val small{font-size:11px}.stat .lbl{font-size:9.5px;line-height:1.25}.stat .sub{display:none}
+  }
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
-    <div class="brand"><div class="logo">✦</div> MealFlow</div>
+    <a class="brand" href="#top"><span class="logo">✦</span> MealFlow</a>
     <div class="navlabel">Workspace</div>
-    <nav class="nav"><a class="active" href="#">▦ &nbsp;Meal planner</a><a href="#board">◴ &nbsp;Rotation board</a><a href="#agenda-card">✓ &nbsp;Tracker</a><a href="#board">♧ &nbsp;Meal library</a></nav>
-    <div class="navlabel">Auto-plan settings</div>
-    <label for="dietPref">Suggestions include</label>
-    <select class="field" id="dietPref"><option value="veg">Vegetarian only</option><option value="egg">Veg + Egg</option><option value="chicken">Veg + Egg + Chicken</option></select>
-    <div class="tip"><b>Professional rotation</b>Suggestions favour dishes you haven’t had for the longest, avoid the same dish family on neighbouring days, and keep winter sabzis for Nov–Feb.</div>
+    <nav class="nav" id="nav">
+      <a class="active" href="#top"><i>▦</i>Planner</a>
+      <a href="#plan"><i>✓</i>Today’s plan</a>
+      <a href="#agenda-card"><i>◴</i>This week</a>
+      <a href="#board"><i>♧</i>Meal library</a>
+    </nav>
+    <div class="navlabel">Data</div>
+    <button class="btn small" id="btnReset" title="Restore the starter meal list and clear all bookings">↺ &nbsp;Reset library &amp; plan</button>
+    <div class="keys"><b>Quick tips</b><kbd>←</kbd> <kbd>→</kbd> move the focus day.<br>Click any board cell to book a meal. ↻ swaps in a fresh suggestion.<br><br>Suggestions favour dishes you haven’t had for longest and keep winter sabzis for Nov–Feb.</div>
   </aside>
 
-  <main>
+  <main id="top">
     <header class="top">
-      <div><div class="eyebrow">Home meal planning</div><h1>Meal Planner &amp; Tracker</h1><p>Plan breakfast, lunch and dinner from one rotating meal library.</p></div>
+      <div><div class="eyebrow" id="greet">Home meal planning</div><h1>Meal Planner &amp; Tracker</h1><p>Plan breakfast, lunch and dinner from one rotating meal library.</p></div>
       <div class="actions"><button class="btn" id="btnToday">Jump to today</button><button class="btn primary" id="btnAdd">＋ Add meal</button></div>
     </header>
 
     <section class="hero">
-      <div class="stack">
-        <div class="card pad">
-          <div class="card-head"><div><h2>Your planning window</h2><small>Focus day in the middle · 2 days before and after</small></div>
-            <div class="navbtns"><span class="month" id="focusMonth"></span><button class="btn small" id="btnPrev" aria-label="Previous day">‹</button><input class="field" type="date" id="datePick" aria-label="Jump to date"><button class="btn small" id="btnNext" aria-label="Next day">›</button></div></div>
-          <div class="date-strip" id="focusStrip"></div>
-        </div>
-        <div class="card pad" id="agenda-card"><div class="card-head"><div><h2>Next 7 days at a glance</h2><small>↺ marks a dish that repeats in the week</small></div>
-          <div class="actions"><button class="btn small primary" id="btnAuto">Auto-plan 7 days</button><button class="btn small" id="btnClear">Clear</button></div></div>
-          <div id="agenda"></div></div>
+      <div class="card pad" id="strip-card">
+        <div class="card-head"><div><h2>Your planning window</h2><small>Focus day in the middle · 2 days before &amp; after</small></div>
+          <div class="navbtns"><span class="month" id="focusMonth"></span><button class="btn small" id="btnPrev" aria-label="Previous day">‹</button><input class="field" type="date" id="datePick" aria-label="Jump to date"><button class="btn small" id="btnNext" aria-label="Next day">›</button></div></div>
+        <div class="date-strip" id="focusStrip"></div>
       </div>
       <div class="card pad" id="plan"></div>
+      <div class="card pad" id="agenda-card">
+        <div class="card-head"><div><h2>Next 7 days at a glance</h2><small>↺ marks a dish that repeats in the week</small></div>
+          <div class="actions">
+            <label class="diet">Include <select class="field" id="dietPref" aria-label="Suggestions include"><option value="veg">Veg only</option><option value="egg">Veg + Egg</option><option value="chicken">Veg + Egg + Chicken</option></select></label>
+            <button class="btn small primary" id="btnAuto">Auto-plan 7 days</button><button class="btn small" id="btnClear">Clear</button></div></div>
+        <div id="agenda"></div>
+      </div>
     </section>
 
     <div class="stats" id="stats"></div>
@@ -97,11 +143,26 @@
     </div>
 
     <section class="card tablecard" id="board">
-      <div class="tablehead"><div><h2>Meal rotation board</h2><small>Click a cell to book or clear a meal for that date · <span id="mealCount"></span></small></div><div><small id="rangeLabel"></small> &nbsp;<button class="btn small ghost" id="btnReset">Reset</button></div></div>
+      <div class="tablehead"><div><h2>Meal rotation board</h2><small>Click a cell to book or clear a meal for that date · <span id="mealCount"></span></small></div><small id="rangeLabel"></small></div>
       <div class="board-wrap"><table class="board"><thead><tr id="boardHead"></tr></thead><tbody id="boardBody"></tbody></table></div>
     </section>
   </main>
 </div>
 <script src="mealflow.js"></script>
+<script>
+  /* Option-1 extras: time-of-day greeting + sidebar scroll-spy */
+  (function(){
+    var h=new Date().getHours(), g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+    document.getElementById('greet').textContent=g+' · home meal planning';
+    var links=[].slice.call(document.querySelectorAll('#nav a')), pairs=links.map(function(a){var t=a.getAttribute('href');return [a,document.querySelector(t==='#plan'?'#strip-card':t)]});
+    function spy(){
+      var y=window.scrollY+120, cur=pairs[0][0];
+      pairs.forEach(function(p){ if(p[1]&&p[1].id!=='top'&&p[1].getBoundingClientRect().top+window.scrollY<=y) cur=p[0]; });
+      if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) cur=links[links.length-1];
+      links.forEach(function(a){a.classList.toggle('active',a===cur)});
+    }
+    window.addEventListener('scroll',spy,{passive:true}); spy();
+  })();
+</script>
 </body>
 </html>
