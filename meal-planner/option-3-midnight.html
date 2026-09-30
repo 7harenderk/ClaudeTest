@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MealFlow — Option 3 · Midnight</title>
+<link rel="stylesheet" href="mealflow.css">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#0e1420;--surface:#151d2c;--surface2:#1b2538;--head:#18213a;--ink:#e7ecf6;--muted:#93a1bb;--faint:#4a5872;--line:#26334b;
+    --brand:#5b8cff;--brand-ink:#08101f;--brand-soft:rgba(91,140,255,.16);--accent:#2dd4bf;--accent-ink:#04211d;
+    --cB:#fbbf24;--cL:#34d399;--cD:#a78bfa;
+    --sB:rgba(251,191,36,.16);--sBi:#fcd34d;--sL:rgba(52,211,153,.15);--sLi:#6ee7b7;--sD:rgba(167,139,250,.17);--sDi:#c4b5fd;
+    --sec:#1a2a4a;--sec-ink:#9db8ff;--focus-col:rgba(91,140,255,.09);--today-col:rgba(45,212,191,.07);--hover:rgba(255,255,255,.035);
+    --egg:#fbbf24;--chk:#fb923c;--win:#67e8f9;--danger:#fda4af;--danger-soft:rgba(244,63,94,.16);--ok:#6ee7b7;
+    --radius:12px;--shadow:0 1px 0 rgba(255,255,255,.03) inset,0 14px 30px rgba(0,0,0,.28);--lift:0 8px 22px rgba(91,140,255,.35);
+    --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--font-head:var(--font);
+  }
+  body{background:radial-gradient(1000px 500px at 85% -10%,#1a2a55 0,transparent 60%),var(--bg)}
+  .shell{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;max-width:1500px;margin:0 auto;padding:20px 22px 48px;align-items:start}
+  .main{display:grid;gap:16px;min-width:0}
+  .cmd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em;margin-right:8px}
+  .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#5b8cff,#2dd4bf);display:grid;place-items:center;color:#06101f;font-size:16px}
+  .cmd .grow{flex:1}
+  .cmd .field{background:var(--surface2)}
+  .strip-card{padding:16px 18px}
+  .strip-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .strip-head h2{font-size:14px;letter-spacing:.02em}
+  .strip-head small{color:var(--muted)}
+  .navbtns{display:flex;gap:6px;align-items:center}
+  .month{color:var(--accent);font-weight:700;font-size:12px;margin-right:6px}
+  .date-card{background:var(--surface2)}
+  .date-card.is-focus{background:linear-gradient(160deg,#6f9aff,#4d7cf0)}
+  .tablecard{overflow:hidden}
+  .tools{padding:12px 14px;border-bottom:1px solid var(--line)}
+  .tools .search{flex:1 1 200px}
+  .tools .field{background:var(--surface2)}
+  .tablecard .board-wrap{max-height:calc(100vh - 330px);min-height:420px}
+  .foot{display:flex;justify-content:space-between;padding:10px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);flex-wrap:wrap;gap:8px}
+  .rail{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding-right:2px}
+  .pad{padding:16px 18px}
+  .rail h2{font-size:14px}
+  .rail .s{display:block;color:var(--muted);margin:2px 0 10px}
+  .rail .stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .rail .stat{padding:10px 11px}
+  .rail .stat .val{font-size:20px}
+  .rail .stat .val small{font-size:11px}
+  .rail .stat .lbl{font-size:9.5px;line-height:1.2}
+  .rail .stat .sub{display:none}
+  #plan .plan-row{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--cB);border-radius:10px;padding:11px 12px;margin-top:9px;grid-template-columns:1fr auto;gap:8px 10px}
+  #plan .plan-row.s-L{border-left-color:var(--cL)}#plan .plan-row.s-D{border-left-color:var(--cD)}
+  #plan .plan-row .tag{grid-column:1/-1;justify-self:start;padding:3px 8px;font-size:10px}
+  #plan .plan-head h2{font-size:16px}
+  .rail>*{min-width:0}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .agenda{font-size:11.5px}.agenda th,.agenda td{padding:7px 5px}
+  .rail .agenda{table-layout:fixed}.rail .agenda th:first-child{width:74px}.rail .agenda td{overflow-wrap:anywhere}
+  .rail .agenda .pill{display:block;width:max-content;margin-top:3px}
+  #plan .plan-actions{flex-wrap:nowrap}
+  @media(max-width:1180px){.shell{grid-template-columns:1fr}.rail{position:static;max-height:none;overflow:visible;order:-1}.rail .stats{grid-template-columns:repeat(3,1fr)}.tablecard .board-wrap{max-height:72vh}}
+  @media(max-width:860px){.shell{padding:14px 12px 40px}.rail .stats{grid-template-columns:1fr}.rail .stat .sub{display:block}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="main">
+    <div class="cmd">
+      <div class="brand"><span class="logo">◆</span>MealFlow</div>
+      <span class="grow"></span>
+      <select class="field" id="dietPref" aria-label="Suggestions include"><option value="veg">Suggest: Vegetarian only</option><option value="egg">Suggest: Veg + Egg</option><option value="chicken">Suggest: Veg + Egg + Chicken</option></select>
+      <button class="btn" id="btnToday">Today</button>
+      <button class="btn primary" id="btnAdd">＋ Add meal</button>
+    </div>
+
+    <section class="card strip-card">
+      <div class="strip-head"><div><h2>PLANNING WINDOW</h2><small><span id="rangeLabel"></span></small></div>
+        <div class="navbtns"><span class="month" id="focusMonth"></span><button class="btn small" id="btnPrev" aria-label="Previous day">‹</button><input class="field" type="date" id="datePick" aria-label="Jump to date"><button class="btn small" id="btnNext" aria-label="Next day">›</button></div></div>
+      <div class="date-strip" id="focusStrip"></div>
+    </section>
+
+    <section class="card tablecard" id="board">
+      <div class="tools">
+        <input class="field search" id="search" type="search" placeholder="Search meal options…" aria-label="Search meals">
+        <select class="field" id="fSlot" aria-label="Meal filter"><option value="">All meals</option><option value="B">Breakfast</option><option value="L">Lunch</option><option value="D">Dinner</option></select>
+        <select class="field" id="fDiet" aria-label="Type filter"><option value="">Veg, egg &amp; chicken</option><option value="veg">Vegetarian</option><option value="egg">Egg</option><option value="chicken">Chicken</option></select>
+        <button class="btn" id="btnCollapse">Collapse all</button>
+        <div class="legend"><span><i class="B"></i>Breakfast</span><span><i class="L"></i>Lunch</span><span><i class="D"></i>Dinner</span></div>
+      </div>
+      <div class="board-wrap"><table class="board"><thead><tr id="boardHead"></tr></thead><tbody id="boardBody"></tbody></table></div>
+      <div class="foot"><span id="mealCount"></span><span>Click a cell to book or clear · <button class="btn small ghost" id="btnReset">Reset library</button></span></div>
+    </section>
+  </div>
+
+  <aside class="rail">
+    <div class="card pad" id="plan"></div>
+    <div class="stats" id="stats"></div>
+    <div class="card pad"><h2>Next 7 days</h2><small class="s">↺ = dish repeats in the week</small><div id="agenda"></div>
+      <div class="actions" style="margin-top:14px"><button class="btn primary small" id="btnAuto">Auto-plan 7 days</button><button class="btn small" id="btnClear">Clear</button></div></div>
+  </aside>
+</div>
+<script src="mealflow.js"></script>
+</body>
+</html>

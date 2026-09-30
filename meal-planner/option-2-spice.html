@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MealFlow — Option 2 · Spice</title>
+<link rel="stylesheet" href="mealflow.css">
+<style>
+  :root{
+    --bg:#faf5ec;--surface:#fffdf8;--surface2:#f6eedf;--head:#f3e9d6;--ink:#2b1d16;--muted:#7a6656;--faint:#c4b29e;--line:#e8dcc7;
+    --brand:#b4441f;--brand-ink:#fff;--brand-soft:#fbe6da;--accent:#2f6b57;--accent-ink:#fff;
+    --cB:#d9a21b;--cL:#b4441f;--cD:#5b3e8f;
+    --sB:#fbeab8;--sBi:#7a5200;--sL:#f9dccd;--sLi:#8a2f10;--sD:#e9e0f7;--sDi:#4a3078;
+    --sec:#f0e2c8;--sec-ink:#7c3a15;--focus-col:#fdf0e6;--today-col:#eef6f1;--hover:rgba(180,68,31,.05);
+    --egg:#a16207;--chk:#b91c1c;--win:#1d5a8a;--danger:#b91c1c;--danger-soft:#fbe4e1;--ok:#2f6b57;
+    --radius:10px;--shadow:0 2px 0 rgba(90,60,30,.05),0 12px 26px rgba(90,60,30,.08);--lift:0 8px 18px rgba(180,68,31,.3);
+    --font:"Segoe UI",Inter,ui-sans-serif,system-ui,-apple-system,Roboto,Arial,sans-serif;--font-head:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  }
+  .topbar{background:#2b1d16;color:#f7ecdc}
+  .topbar-in{max-width:1320px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:26px;height:62px}
+  .brand{font-family:var(--font-head);font-size:23px;font-weight:700;display:flex;align-items:center;gap:10px}
+  .brand .logo{width:32px;height:32px;border-radius:50%;background:var(--brand);display:grid;place-items:center;font-size:16px;color:#fff}
+  .topnav{display:flex;gap:4px;flex:1}
+  .topnav a{color:#d9c8b0;text-decoration:none;padding:8px 13px;border-radius:8px;font-weight:600;font-size:13.5px}
+  .topnav a.active,.topnav a:hover{background:#43302a;color:#fff}
+  .topbar .field{background:#43302a;border-color:#5a423a;color:#fff;padding:7px 10px}
+  .topbar .field option{color:#111}
+  .topbar label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#bda98f;margin-right:6px}
+  .wrap{max-width:1320px;margin:0 auto;padding:26px 28px 56px;display:grid;gap:22px}
+  .headline{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px}
+  .headline h1{font-size:34px;letter-spacing:-.01em}
+  .headline p{margin:5px 0 0;color:var(--muted)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .band{padding:22px 24px;background:linear-gradient(180deg,#fffaf0,#fdf1e0)}
+  .band-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+  .band-head h2{font-size:20px}
+  .band-head small{color:var(--muted)}
+  .navbtns{display:flex;gap:6px;align-items:center}
+  .month{font-family:var(--font-head);font-size:15px;color:var(--brand);font-weight:700;margin-right:8px}
+  .date-card{padding:14px 4px 12px;border-radius:12px;background:#fffdf8}
+  .date-card .num{font-size:32px}
+  /* plan renders as three meal cards side by side */
+  #plan{padding:0;background:none;border:0;box-shadow:none}
+  #plan .plan-head{flex-direction:row;align-items:baseline;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+  #plan .plan-head h2{font-size:22px}
+  #plan .plan-rows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  #plan .plan-row{display:flex;flex-direction:column;align-items:stretch;gap:12px;border:1px solid var(--line);border-top:5px solid var(--cB);background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);min-height:168px}
+  #plan .plan-row.s-L{border-top-color:var(--cL)}#plan .plan-row.s-D{border-top-color:var(--cD)}
+  #plan .tag{align-self:flex-start}
+  #plan .plan-item b{font-family:var(--font-head);font-size:18px;line-height:1.25}
+  #plan .plan-actions{margin-top:auto;justify-content:flex-start}
+  .split{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+  .side-col{display:grid;gap:16px;position:sticky;top:14px}
+  .side-col .stats{grid-template-columns:1fr;gap:10px}
+  .pad{padding:18px}
+  .side-col h2{font-size:16px;margin-bottom:4px}
+  .side-col small.s{color:var(--muted);display:block;margin-bottom:10px}
+  .tablecard{overflow:hidden}
+  .tools{padding:14px 16px;border-bottom:1px solid var(--line);background:var(--surface2)}
+  .tools .search{flex:1 1 200px}
+  .tablecard .board-wrap{max-height:76vh}
+  .board thead th.meal-col{font-size:12px}
+  .foot{display:flex;justify-content:space-between;gap:10px;padding:10px 16px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);flex-wrap:wrap}
+  @media(max-width:1100px){.split{grid-template-columns:1fr}.side-col{position:static;grid-template-columns:1fr 1fr}.side-col .stats{grid-column:1/-1;grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:860px){
+    .topnav,.topbar label{display:none}.topbar-in{padding:0 14px;gap:10px}.wrap{padding:16px 14px 40px}
+    .headline h1{font-size:26px}.band{padding:16px 12px}.date-card .num{font-size:22px}
+    #plan .plan-rows{grid-template-columns:1fr}#plan .plan-row{min-height:0}
+    .side-col{grid-template-columns:1fr}.side-col .stats{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+  <div class="brand"><span class="logo">✿</span>MealFlow</div>
+  <nav class="topnav"><a class="active" href="#">Planner</a><a href="#board">Rotation board</a><a href="#week">This week</a><a href="#board">Meal library</a></nav>
+  <div><label for="dietPref">Suggest</label><select class="field" id="dietPref"><option value="veg">Vegetarian only</option><option value="egg">Veg + Egg</option><option value="chicken">Veg + Egg + Chicken</option></select></div>
+</div></div>
+
+<div class="wrap">
+  <div class="headline">
+    <div><h1>What shall we eat today?</h1><p>Rotate your home menu with ease — breakfast, lunch and dinner planned days ahead.</p></div>
+    <div class="actions"><button class="btn" id="btnToday">Jump to today</button><button class="btn primary" id="btnAdd">＋ Add meal option</button></div>
+  </div>
+
+  <section class="card band">
+    <div class="band-head"><div><h2>Planning window</h2><small>Today in focus, two days either side · <span id="rangeLabel"></span></small></div>
+      <div class="navbtns"><span class="month" id="focusMonth"></span><button class="btn small" id="btnPrev" aria-label="Previous day">‹</button><input class="field" type="date" id="datePick" aria-label="Jump to date"><button class="btn small" id="btnNext" aria-label="Next day">›</button></div></div>
+    <div class="date-strip" id="focusStrip"></div>
+  </section>
+
+  <section id="plan"></section>
+
+  <div class="split">
+    <section class="card tablecard" id="board">
+      <div class="tools">
+        <input class="field search" id="search" type="search" placeholder="Search meal options…" aria-label="Search meals">
+        <select class="field" id="fSlot" aria-label="Meal filter"><option value="">All meals</option><option value="B">Breakfast</option><option value="L">Lunch</option><option value="D">Dinner</option></select>
+        <select class="field" id="fDiet" aria-label="Type filter"><option value="">Veg, egg &amp; chicken</option><option value="veg">Vegetarian</option><option value="egg">Egg</option><option value="chicken">Chicken</option></select>
+        <button class="btn" id="btnCollapse">Collapse all</button>
+        <div class="legend"><span><i class="B"></i>Breakfast</span><span><i class="L"></i>Lunch</span><span><i class="D"></i>Dinner</span></div>
+      </div>
+      <div class="board-wrap"><table class="board"><thead><tr id="boardHead"></tr></thead><tbody id="boardBody"></tbody></table></div>
+      <div class="foot"><span id="mealCount"></span><span>Click a cell to book or clear · <button class="btn small ghost" id="btnReset">Reset library</button></span></div>
+    </section>
+
+    <aside class="side-col" id="week">
+      <div class="stats" id="stats"></div>
+      <div class="card pad"><h2>Next 7 days</h2><small class="s">↺ = repeats in the week</small><div id="agenda"></div>
+        <div class="actions" style="margin-top:14px"><button class="btn primary small" id="btnAuto">Auto-plan 7 days</button><button class="btn small" id="btnClear">Clear</button></div></div>
+    </aside>
+  </div>
+</div>
+<script src="mealflow.js"></script>
+</body>
+</html>
